@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=2]
+
+[sub_resource type="CubeMesh" id=4]
+size = Vector3( 1.5, 1.5, 1.5 )
+
+[sub_resource type="SpatialMaterial" id=3]
+albedo_color = Color( 0.701961, 0.717647, 0.705882, 1 )
+
+[node name="Crate" type="Spatial"]
+
+[node name="MeshInstance" type="MeshInstance" parent="."]
+mesh = SubResource( 4 )
+skeleton = NodePath("")
+material/0 = SubResource( 3 )

@@ -1,0 +1,118 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://Scripts/Main.gd" type="Script" id=1]
+[ext_resource path="res://Scenes/Level.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes/Player.tscn" type="PackedScene" id=3]
+[ext_resource path="res://fonts/kirifont/Kirifont.tres" type="DynamicFont" id=4]
+[ext_resource path="res://Scenes/LevelMenu.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Scenes/EndGameDialog.tscn" type="PackedScene" id=6]
+
+[sub_resource type="Theme" id=5]
+default_font = ExtResource( 4 )
+
+[sub_resource type="InputEventAction" id=3]
+action = "ui_restart"
+
+[sub_resource type="ShortCut" id=4]
+shortcut = SubResource( 3 )
+
+[sub_resource type="InputEventAction" id=1]
+action = "ui_undo"
+
+[sub_resource type="ShortCut" id=2]
+shortcut = SubResource( 1 )
+
+[node name="Main" type="Spatial"]
+script = ExtResource( 1 )
+
+[node name="Level" parent="." instance=ExtResource( 2 )]
+
+[node name="DirectionalLight" parent="Level" index="1"]
+transform = Transform( -0.952748, 0.197263, 0.230996, 0.060906, -0.620951, 0.78148, 0.297594, 0.758622, 0.579595, 19.9015, 20, -15.1331 )
+light_energy = 0.5
+light_indirect_energy = 2.0
+
+[node name="Player" parent="." instance=ExtResource( 3 )]
+
+[node name="CameraTarget" parent="Player/PlayerBody" index="1"]
+transform = Transform( 1, 0, 0, 0, 0.707106, 0.707106, 0, -0.707106, 0.707106, 0, 12, 10 )
+
+[node name="Skeleton" parent="Player/PlayerBody/Barbarian/AnimCharacter/KayKitAnimCharacter" index="0"]
+bones/0/bound_children = [ NodePath("Body") ]
+bones/1/bound_children = [ NodePath("Head") ]
+bones/2/bound_children = [ NodePath("LeftArm") ]
+bones/3/bound_children = [ NodePath("HandSlotLeft") ]
+bones/4/bound_children = [ NodePath("RightArm") ]
+bones/5/bound_children = [ NodePath("HandSlotRight") ]
+
+[node name="HandSlotLeft" parent="Player/PlayerBody/Barbarian/AnimCharacter/KayKitAnimCharacter/Skeleton" index="4"]
+transform = Transform( -1, 2.92556e-08, 0, 0, 1.04171e-07, 1, -1.04757e-07, 1, -7.80337e-08, 0.4, 0.205887, -1.3956e-07 )
+
+[node name="HandSlotRight" parent="Player/PlayerBody/Barbarian/AnimCharacter/KayKitAnimCharacter/Skeleton" index="5"]
+transform = Transform( -1, 1.0808e-07, 0, 0, -1.76167e-07, 1, 3.87132e-10, 1, 2.23518e-07, -0.4, 0.205887, 1.2314e-07 )
+
+[node name="UI" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = SubResource( 5 )
+
+[node name="Restart" type="Button" parent="UI"]
+margin_right = 166.0
+margin_bottom = 54.0
+shortcut = SubResource( 4 )
+text = "RESTART"
+
+[node name="Undo" type="Button" parent="UI"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -101.0
+margin_bottom = 56.0
+shortcut = SubResource( 2 )
+text = "UNDO"
+
+[node name="labelContainer" type="HBoxContainer" parent="UI"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -184.0
+margin_top = 24.0
+margin_right = 192.0
+margin_bottom = 64.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+
+[node name="Crates" type="Label" parent="UI/labelContainer"]
+margin_top = 20.0
+margin_right = 186.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+custom_colors/font_color = Color( 0.172549, 0.168627, 0.168627, 1 )
+text = "crates"
+align = 1
+
+[node name="Level" type="Label" parent="UI/labelContainer"]
+margin_left = 190.0
+margin_top = 20.0
+margin_right = 376.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+custom_colors/font_color = Color( 0.172549, 0.168627, 0.168627, 1 )
+text = "level"
+align = 1
+
+[node name="LevelMenu" parent="." instance=ExtResource( 5 )]
+visible = false
+
+[node name="SaveTimer" type="Timer" parent="."]
+wait_time = 2.0
+
+[node name="EndGameDialog" parent="." instance=ExtResource( 6 )]
+
+[connection signal="button_down" from="UI/Restart" to="." method="restart"]
+[connection signal="button_down" from="UI/Undo" to="." method="undo"]
+[connection signal="timeout" from="SaveTimer" to="." method="_on_SaveTimer_timeout"]
+
+[editable path="Level"]
+[editable path="Player"]
+[editable path="Player/PlayerBody/Barbarian"]
+[editable path="Player/PlayerBody/Barbarian/AnimCharacter"]

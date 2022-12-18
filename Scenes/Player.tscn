@@ -1,0 +1,59 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Scripts/PlayerBody.gd" type="Script" id=1]
+[ext_resource path="res://Scenes/Barbarian.tscn" type="PackedScene" id=2]
+
+[sub_resource type="BoxShape" id=1]
+extents = Vector3( 0.9, 0.9, 0.9 )
+
+[node name="Player" type="Spatial"]
+
+[node name="InterpolatedCamera" type="InterpolatedCamera" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.766045, 0.642787, 0, -0.642787, 0.766045, 0, 10, 10 )
+size = 20.0
+target = NodePath("../PlayerBody/CameraTarget")
+enabled = true
+
+[node name="PlayerBody" type="KinematicBody" parent="."]
+script = ExtResource( 1 )
+
+[node name="CollisionShape" type="CollisionShape" parent="PlayerBody"]
+shape = SubResource( 1 )
+
+[node name="CameraTarget" type="Spatial" parent="PlayerBody"]
+transform = Transform( 1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 20, 10 )
+
+[node name="Barbarian" parent="PlayerBody" instance=ExtResource( 2 )]
+transform = Transform( 1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, -0.577051, 0 )
+
+[node name="Skeleton" parent="PlayerBody/Barbarian/AnimCharacter/KayKitAnimCharacter" index="0"]
+bones/0/bound_children = [  ]
+bones/1/bound_children = [  ]
+bones/2/bound_children = [  ]
+bones/3/bound_children = [  ]
+bones/4/bound_children = [  ]
+bones/5/bound_children = [  ]
+
+[node name="Head" parent="PlayerBody/Barbarian/AnimCharacter/KayKitAnimCharacter/Skeleton" index="0"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.711598, 0 )
+
+[node name="character_barbarianHat" parent="PlayerBody/Barbarian/AnimCharacter/KayKitAnimCharacter/Skeleton/Head/character_barbarianHead" index="0"]
+transform = Transform( 1, 0, 0, 0, 0.939693, 0.34202, 0, -0.34202, 0.939693, 0, 0.700825, 0 )
+
+[node name="Body" parent="PlayerBody/Barbarian/AnimCharacter/KayKitAnimCharacter/Skeleton" index="1"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+
+[node name="LeftArm" parent="PlayerBody/Barbarian/AnimCharacter/KayKitAnimCharacter/Skeleton" index="2"]
+transform = Transform( -1.19209e-07, 0.471936, -0.881633, 2.5332e-07, -0.881633, -0.471936, -1, -2.5332e-07, -1.19209e-07, 0.14, 0.691598, -1.3027e-15 )
+
+[node name="RightArm" parent="PlayerBody/Barbarian/AnimCharacter/KayKitAnimCharacter/Skeleton" index="3"]
+transform = Transform( -1.19209e-07, -0.471936, -0.881633, -2.23518e-07, -0.881633, 0.471936, -1, 2.23517e-07, -1.19209e-07, -0.14, 0.691598, 8.40813e-15 )
+
+[node name="HandSlotLeft" parent="PlayerBody/Barbarian/AnimCharacter/KayKitAnimCharacter/Skeleton" index="4"]
+transform = Transform( -1, 2.92556e-08, 0, 0, 1.04171e-07, 1, -1.04757e-07, 1, -7.80337e-08, 0.4, 0.205887, -1.3956e-07 )
+
+[node name="HandSlotRight" parent="PlayerBody/Barbarian/AnimCharacter/KayKitAnimCharacter/Skeleton" index="5"]
+transform = Transform( -1, 1.0808e-07, 0, 0, -1.76167e-07, 1, 3.87132e-10, 1, 2.23518e-07, -0.4, 0.205887, 1.2314e-07 )
+
+[editable path="PlayerBody/Barbarian"]
+[editable path="PlayerBody/Barbarian/AnimCharacter"]
