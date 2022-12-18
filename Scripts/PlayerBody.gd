@@ -25,7 +25,7 @@ func guess_iterations ():
 func _ready() -> void:
 	set_animation("Idle")
 	guess_iterations()
-	set_player_stance()
+	set_player_stance(Vector3(0,0,1))
 	pass # Replace with function body.
 
 # Returns the world position of this object
@@ -33,7 +33,7 @@ func get_world_position() -> Vector3:
 	return transform.xform_inv(Vector3.ZERO)
 
 # Set the player mesh stance 
-func set_player_stance (dir = Vector3(0,1,0)):
+func set_player_stance (dir):
 	playerObject.transform = Transform.IDENTITY.looking_at(-dir.normalized(), Vector3.UP)\
 	   .translated(translateFactor).scaled(scaleFactor)
 

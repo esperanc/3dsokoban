@@ -81,3 +81,8 @@ func _notification(what):
 func _on_SaveTimer_timeout() -> void:
 	display_stats()
 	save_game()
+
+
+func _on_Button_button_down() -> void:
+	print ("xpto")
+	pass # Replace with function body.
